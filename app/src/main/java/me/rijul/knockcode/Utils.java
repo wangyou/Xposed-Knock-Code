@@ -9,6 +9,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import de.robv.android.xposed.XposedBridge;
+
 /**
  * Created by rijul on 2/3/16.
  */
@@ -50,6 +52,7 @@ public class Utils {
     public static final String SETTINGS_CODE_TEXT_DISABLED = "settings_code_text_disabled";
     public static final String SETTINGS_CODE_TEXT_DISABLED_VALUE = "settings_code_text_disabled_value";
 
+    public static final String SETTINGS_CODE_LINES = "settings_code_lines";
     public static final String SETTINGS_CODE_LINES_VISIBLE = "settings_code_lines_visible";
     public static final String SETTINGS_CODE_LINES_COLOR_READY = "settings_code_lines_color_ready";
     public static final String SETTINGS_CODE_LINES_CORRECT = "settings_code_lines_correct";
@@ -105,9 +108,7 @@ public class Utils {
                     os.writeBytes("exit\n");
                     os.flush();
                     su.waitFor();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -167,5 +168,9 @@ public class Utils {
             passcode.add(Integer.parseInt(digitString));
         }
         return passcode;
+    }
+
+    public static void XposedLog(String string) {
+        XposedBridge.log("[KnockCode] " + string);
     }
 }
